@@ -14,10 +14,10 @@
             class="input-todo"
             placeholder="What needs to be done? "
             v-model="item.text"
-            @keyup.enter="taskEntry"
+            @keyup.enter="addTask"
           />
         </div>
-        <Tasks :tasks="tasks" />
+        <Tasks :tasks="tasks" @delete-task="deleteTask" />
         <Footer v-if="tasks.length > 0" />
       </div>
     </div>
@@ -44,7 +44,7 @@ export default {
     };
   },
   methods: {
-    taskEntry(e) {
+    addTask(e) {
       e.preventDefault();
 
       if (!this.item.text) {
@@ -65,22 +65,12 @@ export default {
       this.item.id = "";
       this.item.reminder = true;
     },
+    deleteTask(id) {
+      console.log("from app.vue ->", id);
+      this.tasks = this.tasks.filter((task) => task.id !== id);
+    },
   },
-  created() {
-    // this.tasks.push(this.item)
-    // this.tasks = [
-    //   {
-    //     id: 1,
-    //     text: "Doctors Appointment",
-    //     reminder: true,
-    //   },
-    //   {
-    //     id: 2,
-    //     text: "Meeting at school",
-    //     reminder: true,
-    //   },
-    // ];
-  },
+  emits: ["delete-task"],
 };
 </script>
 

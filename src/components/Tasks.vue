@@ -6,7 +6,7 @@
           <input type="checkbox" />
           <div class="todo-item-label">{{ task.text }}</div>
         </div>
-        <div class="remove-item">x</div>
+        <div class="remove-item" @click="$emit('delete-task',task.id)">x</div>
       </div>
     </div>
   </div>
@@ -22,32 +22,31 @@ export default {
 </script>
 
 <style>
-.todo-item{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    border-bottom: 1px solid #d3d3d3;
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-bottom: 1px solid #d3d3d3;
 }
-.todo-item-left{
-    display: flex;
-    align-items: center;
-
+.todo-item-left {
+  display: flex;
+  align-items: center;
 }
-input[type="checkbox" i]{
-    background: initial;
-    cursor: default;
-    appearance: auto;
-    box-sizing: border-box;
-    margin: 3px 3px 3px 4px;
-    padding: initial;
-    border: initial;
+input[type="checkbox" i] {
+  background: initial;
+  cursor: default;
+  appearance: auto;
+  box-sizing: border-box;
+  margin: 3px 3px 3px 4px;
+  padding: initial;
+  border: initial;
 }
-.todo-item-label{
-    margin-left: 12px;
+.todo-item-label {
+  margin-left: 12px;
 }
-.remove-item{
-    cursor: pointer;
-    color: black;
+.remove-item {
+  cursor: pointer;
+  color: black;
 }
 </style>
