@@ -14,11 +14,11 @@
             class="input-todo"
             placeholder="What needs to be done? "
             v-model="item.text"
+            @keyup.enter="taskEntry"
           />
-          <button @click="taskEntry">Add to Task</button>
         </div>
         <Tasks :tasks="tasks" />
-        
+        <Footer v-if="tasks.length > 0" />
       </div>
     </div>
   </div>
@@ -26,40 +26,60 @@
 
 <script>
 import Tasks from "./components/Tasks.vue";
+import Footer from "./components/Footer.vue";
 export default {
   name: "App",
   components: {
     Tasks,
+    Footer,
   },
   data() {
     return {
       tasks: [],
       item: {
-        id: Math.floor(Math.random() * 100),
+        id: "",
         text: "",
         reminder: true,
       },
     };
   },
   methods: {
-    taskEntry() {
-      this.tasks.push(this.item);
+    taskEntry(e) {
+      e.preventDefault();
+
+      if (!this.item.text) {
+        console.log("please add a task");
+        return;
+      }
+      const newTask = {
+        id: Math.floor(Math.random() * 1000),
+        text: this.item.text,
+        reminder: this.item.reminder,
+      };
+
+      console.log(newTask);
+
+      this.tasks = [...this.tasks, newTask];
+
+      this.item.text = "";
+      this.item.id = "";
+      this.item.reminder = true;
     },
   },
   created() {
     // this.tasks.push(this.item)
-    this.tasks = [
-      {
-        id: 1,
-        text: "Doctors Appointment",
-        reminder: true,
-      },
-      {
-        id: 2,
-        text: "Meeting at school",
-        reminder: true,
-      },
-    ];
+    // this.tasks = [
+    //   {
+    //     id: 1,
+    //     text: "Doctors Appointment",
+    //     reminder: true,
+    //   },
+    //   {
+    //     id: 2,
+    //     text: "Meeting at school",
+    //     reminder: true,
+    //   },
+    // ];
   },
 };
 </script>
