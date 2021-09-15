@@ -17,8 +17,22 @@
             @keyup.enter="addTask"
           />
         </div>
-        <Tasks :tasks="tasks" @delete-task="deleteTask" />
-        <Footer v-if="tasks.length > 0" />
+        <Tasks
+          :tasks="tasks"
+          @delete-task="deleteTask"
+          @update-check="toggleCompleted"
+        />
+        <Footer
+          v-if="tasks.length > 0"
+          :tasks="tasks"
+          :notCom="notCompletedTask"
+          :getComTask="getCompletedTasks"
+          :getPendingTask="getPendingTasks"
+          @all-selected="allSelected"
+          @active="isActive"
+          @completed="isCompleted"
+          @show-all="showAll"
+        />
       </div>
     </div>
   </div>
@@ -39,7 +53,7 @@ export default {
       item: {
         id: "",
         text: "",
-        reminder: true,
+        completed: false,
       },
     };
   },
@@ -54,7 +68,7 @@ export default {
       const newTask = {
         id: Math.floor(Math.random() * 1000),
         text: this.item.text,
-        reminder: this.item.reminder,
+        completed: this.item.completed,
       };
 
       console.log(newTask);
@@ -63,14 +77,48 @@ export default {
 
       this.item.text = "";
       this.item.id = "";
-      this.item.reminder = true;
+      this.item.completed = false;
     },
     deleteTask(id) {
-      console.log("from app.vue ->", id);
       this.tasks = this.tasks.filter((task) => task.id !== id);
     },
+    toggleCompleted(id) {
+      this.tasks = this.tasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      );
+    },
+    allSelected() {
+      this.tasks.forEach((task) => (task.completed ^= true));
+    },
+    isActive() {
+      console.log("hi");
+      // return this.tasks.filter((task) => task.completed === false);
+      this.tasks = this.tasks.filter((task) => task.completed == false);
+    },
+    isCompleted() {
+      console.log("hi 2");
+      // return this.tasks.filter((task) => task.completed === true);
+      // this.tasks = this.tasks.filter((task) => task.completed === true);
+      this.tasks = this.tasks.filter((task) => task.completed == true );
+    },
+    showAll() {
+      this.tasks = this.tasks;
+    },
   },
-  emits: ["delete-task"],
+  computed: {
+    notCompletedTask() {
+      return this.tasks.filter((p) => !p.completed).length;
+    },
+    getCompletedTasks(){
+      return this.tasks.filter((task)=>task.completed);
+
+    },
+    getPendingTasks(){
+      return this.tasks.filter((task)=>!task.completed);
+
+    }
+  },
+  emits: ["delete-task", "update-check", "all-selected", "completed", "active","show-all"],
 };
 </script>
 

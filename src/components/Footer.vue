@@ -1,20 +1,28 @@
 <template>
   <div>
     <div class="lower-part">
-      <input type="checkbox" />Check All
+      <input type="checkbox" v-on:change="$emit('all-selected')" />Check All
 
-      <div>1 Item left</div>
+      <div>{{ notCom }} Item left</div>
     </div>
     <div class="lower-part">
-      <button class="active">All</button>
-      <button>Active</button>
-      <button>Completed</button>
+      <button class="active" @click="$emit('show-all')">All</button>
+      <button @click="getComTask()">Active</button>
+      <button @click="getPendingTask()">Completed</button>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  // count task remainder true
+  props: {
+    tasks: Array,
+    notCom: Number,
+    getComTask,
+    getPendingTask,
+  },
+};
 </script>
 
 <style>
