@@ -26,12 +26,10 @@
           v-if="tasks.length > 0"
           :tasks="tasks"
           :notCom="notCompletedTask"
-          :getComTask="getCompletedTasks"
-          :getPendingTask="getPendingTasks"
           @all-selected="allSelected"
-          @active="isActive"
-          @completed="isCompleted"
-          @show-all="showAll"
+          @active-task="isActive"
+          @completed-task="isCompleted"
+          @show-all-task="showAll"
         />
       </div>
     </div>
@@ -99,7 +97,7 @@ export default {
       console.log("hi 2");
       // return this.tasks.filter((task) => task.completed === true);
       // this.tasks = this.tasks.filter((task) => task.completed === true);
-      this.tasks = this.tasks.filter((task) => task.completed == true );
+      // this.tasks = this.tasks.filter((task) => task.completed == true );
     },
     showAll() {
       this.tasks = this.tasks;
@@ -118,7 +116,7 @@ export default {
 
     }
   },
-  emits: ["delete-task", "update-check", "all-selected", "completed", "active","show-all"],
+  emits: ["delete-task", "update-check", "all-selected", "completed-task", "active-task","show-all-task"],
 };
 </script>
 

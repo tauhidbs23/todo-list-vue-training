@@ -6,9 +6,9 @@
       <div>{{ notCom }} Item left</div>
     </div>
     <div class="lower-part">
-      <button class="active" @click="$emit('show-all')">All</button>
-      <button @click="getComTask()">Active</button>
-      <button @click="getPendingTask()">Completed</button>
+      <button class="active" @click="$emit('show-all-task')">All</button>
+      <button @click="$emit('active-task')">Active</button>
+      <button @click="$emit('completed-task')">Completed</button>
     </div>
   </div>
 </template>
@@ -19,8 +19,6 @@ export default {
   props: {
     tasks: Array,
     notCom: Number,
-    getComTask,
-    getPendingTask,
   },
 };
 </script>
